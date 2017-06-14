@@ -33,6 +33,8 @@ namespace HutongGames.PlayMaker.Actions
 	    [Tooltip("A parent game object to the speech bubble must have a canvas group component. This can be the root Canvas.")]
 	    public FsmGameObject canvasImage1;
 	    
+	    public FsmBool centerJustifyCanvas;
+      
 	    [ActionSection("Target")]
 	    
 	    [RequiredField]
@@ -123,6 +125,7 @@ namespace HutongGames.PlayMaker.Actions
 		    playerGO = null;
 		    ReverseDirection = null;
 		    enableRotation = true;
+		    centerJustifyCanvas = false;
 
 	    }
 
@@ -261,11 +264,23 @@ namespace HutongGames.PlayMaker.Actions
 		    var TO_collider = targetObject.Value.GetComponent<Collider>();
             Vector3 TO_size = new Vector3(0, 0, 0);
             TO_size.y = TO_collider.bounds.size.y;
-            TO_size = TO_size / 2;
+		    TO_size = TO_size / 2;
+		    
+		    if(centerJustifyCanvas.Value){
 
             // Move game objects position to the target object plus canvas corner offset
-		    go.transform.position = TO + cornerOffset + TO_size + canvasOffset.Value;
-
+			    go.transform.position = TO + rightDistance + TO_size + canvasOffset.Value;
+			    
+		    }
+		    
+		    else{
+		    	
+	            // Move game objects position to the target object plus canvas corner offset	    
+			    go.transform.position = TO + cornerOffset + TO_size + canvasOffset.Value;
+			    
+		    }
+		    
+		    
 	    }
 	    
 	    void rotateCanvas()
